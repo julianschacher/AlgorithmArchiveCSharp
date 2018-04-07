@@ -6,7 +6,7 @@ namespace BogoSort
 {
     public static class BogoSort
     {
-        public static List<T> Run<T>(List<T> list) where T : IComparable<T>
+        public static List<T> RunBogoSort<T>(List<T> list) where T : IComparable<T>
         {
             while (!IsSorted(list))
                 list = Shuffle(list, new Random());

@@ -6,7 +6,7 @@ namespace BubbleSort
 {
     public static class BubbleSort
     {
-        public static List<T> Run<T>(List<T> list) where T : IComparable<T>
+        public static List<T> RunBubbleSort<T>(List<T> list) where T : IComparable<T>
         {
             var length = list.Count;
             

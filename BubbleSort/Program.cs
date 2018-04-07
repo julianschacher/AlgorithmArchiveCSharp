@@ -14,7 +14,7 @@ namespace BubbleSort
             foreach (var number in listBubble)
                 Console.Write(number + " ");
             Console.WriteLine();
-            listBubble = BubbleSort.Run(listBubble);
+            listBubble = BubbleSort.RunBubbleSort(listBubble);
             Console.Write("sorted: ");
             foreach (var number in listBubble)
                 Console.Write(number + " ");

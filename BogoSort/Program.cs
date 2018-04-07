@@ -14,7 +14,7 @@ namespace BogoSort
             foreach (var number in listBogo)
                 Console.Write(number + " ");
             Console.WriteLine();
-            listBogo = BogoSort.Run(listBogo);
+            listBogo = BogoSort.RunBogoSort(listBogo);
             Console.Write("sorted: ");
             foreach (var number in listBogo)
                 Console.Write(number + " ");
