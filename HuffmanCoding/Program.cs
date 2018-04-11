@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace HuffmanCoding
 {
     class Program
@@ -33,6 +34,9 @@ namespace HuffmanCoding
                     readableBitString += "0";
             }
             System.Console.WriteLine(readableBitString);
+
+            var originalString = HuffmanCoding.Decode(result);
+            System.Console.WriteLine(originalString);
         }
     }
 
@@ -40,17 +44,19 @@ namespace HuffmanCoding
     {
         public List<bool> BitString { get; set; }
         public Dictionary<char, List<bool>> Dictionary { get; set; }
+        public HuffmanCoding.Node Tree { get; set; }
 
-        public EncodeResult(List<bool> bitString, Dictionary<char, List<bool>> dictionary)
+        public EncodeResult(List<bool> bitString, Dictionary<char, List<bool>> dictionary, HuffmanCoding.Node tree)
         {
             this.BitString = bitString;
             this.Dictionary = dictionary;
+            this.Tree = tree;
         }
     }
 
     public static class HuffmanCoding
     {
-        class Node
+        public class Node
         {
             public Node[] Children { get; set; } = new Node[2];
             public List<bool> BitString { get; set; } = new List<bool>();
@@ -70,7 +76,29 @@ namespace HuffmanCoding
             var dictionary = CreateDictionary(root);
             var bitString = CreateBitString(input, dictionary);
 
-            return new EncodeResult(bitString, dictionary);
+            return new EncodeResult(bitString, dictionary, root);
+        }
+
+        public static string Decode(EncodeResult result)
+        {
+            var output = "";
+            Node currentNode = result.Tree;
+            foreach (var boolean in result.BitString)
+            {
+                // Go down the tree.
+                if (!boolean)
+                    currentNode = currentNode.Children[0];
+                else
+                    currentNode = currentNode.Children[1];
+
+                // Check if it's a leaf node.
+                if (currentNode.Key.Count() == 1)
+                {                    
+                    output += currentNode.Key;
+                    currentNode = result.Tree;
+                }
+            }
+            return output;
         }
 
         private static Node CreateTree(string input)
