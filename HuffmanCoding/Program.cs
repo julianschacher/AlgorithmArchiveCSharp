@@ -1,6 +1,6 @@
-﻿using System.Collections;
+﻿// submitted by Julian Schacher (jspp)
+using System.Collections;
 using System.Collections.Generic;
-
 
 namespace HuffmanCoding
 {
