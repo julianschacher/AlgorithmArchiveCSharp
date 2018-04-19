@@ -3,40 +3,40 @@ using System.Collections.Generic;
 
 namespace JarvisMarch
 {
+    public class Vector
+    {
+        public int X { get; set; }
+        public int Y { get; set; }
+
+        public Vector(int xValue, int yValue)
+        {
+            this.X = xValue;
+            this.Y = yValue;
+        }
+    }
+
     public static class JarvisMarch
     {
-        private class Vector
-        {
-            public int XValue { get; set; }
-            public int YValue { get; set; }
-
-            public Vector(int xValue, int yValue)
-            {
-                this.XValue = xValue;
-                this.YValue = yValue;
-            }
-        }
-
-        public static List<Point> RunJarvisMarch(List<Point> points)
+        public static List<Vector> RunJarvisMarch(List<Vector> points)
         {
             // Set the intial point to the first point of the list.
             var initialPoint = points[0];
             // Search for a better initial point. One where the x-position is the lowest.
             for (int i = 1; i < points.Count; i++)
             {
-                if (points[i].XPosition < initialPoint.XPosition)
+                if (points[i].X < initialPoint.X)
                 {
                     initialPoint = points[i];
                 }
             }
             // Add the initial point as the first point of the gift wrap.
-            var giftWrap = new List<Point>()
+            var giftWrap = new List<Vector>()
             {
                 initialPoint
             };
 
             // Set previous point first to some point below the first initial point.
-            var previousPoint = new Point(initialPoint.XPosition, initialPoint.YPosition - 1);
+            var previousPoint = new Vector(initialPoint.X, initialPoint.Y - 1);
             var currentPoint = initialPoint;
 
             var notWrapped = true;
@@ -45,17 +45,17 @@ namespace JarvisMarch
             {
                 // Search for next Point.
                 // Set the first vector, which is currentPoint -> previousPoint.
-                var firstVector = new Vector(previousPoint.XPosition - currentPoint.XPosition, previousPoint.YPosition - currentPoint.YPosition);
+                var firstVector = new Vector(previousPoint.X - currentPoint.X, previousPoint.Y - currentPoint.Y);
 
-                Point nextPoint = null;
+                Vector nextPoint = null;
                 int scalarProduct = 0;
                 for (int i = 1; i < points.Count; i++)
                 {
                     // Set the second vector, which is currentPoint -> points[i](potential nextPoint).
-                    var secondVector = new Vector(points[i].XPosition - currentPoint.XPosition, points[i].YPosition - currentPoint.YPosition);
+                    var secondVector = new Vector(points[i].X - currentPoint.X, points[i].Y - currentPoint.Y);
 
                     // Calculate the current scalar product.
-                    var tempScalarProduct = (firstVector.XValue * secondVector.XValue) + (firstVector.YValue * secondVector.YValue);
+                    var tempScalarProduct = (firstVector.X * secondVector.X) + (firstVector.Y * secondVector.Y);
 
                     // If there's currently no next Point or the current scalar product is smaller, set nextPoint to point[i].
                     if (nextPoint == null || tempScalarProduct < scalarProduct)
@@ -78,18 +78,6 @@ namespace JarvisMarch
             }
 
             return giftWrap;
-        }
-    }
-
-    public class Point
-    {
-        public int XPosition { get; set; }
-        public int YPosition { get; set; }
-
-        public Point(int xPosition, int yPosition)
-        {
-            this.XPosition = xPosition;
-            this.YPosition = yPosition;
         }
     }
 }

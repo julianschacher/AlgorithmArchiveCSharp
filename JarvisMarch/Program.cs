@@ -10,21 +10,23 @@ namespace JarvisMarch
         {
             System.Console.WriteLine("JarvisMarch");
             // Example list of points.
-            var points = new List<Point>()
+            // The points are represented by vectors here, but that doesn't really matter.
+            var points = new List<Vector>()
             {
-                new Point(1, 3),
-                new Point(2, 4),
-                new Point(4, 0),
-                new Point(1, 0),
-                new Point(0, 2),
-                new Point(2, 2),
-                new Point(3, 4),
-                new Point(3, 1),
+                new Vector(1, 3),
+                new Vector(2, 4),
+                new Vector(4, 0),
+                new Vector(1, 0),
+                new Vector(0, 2),
+                new Vector(2, 2),
+                new Vector(3, 4),
+                new Vector(3, 1),
             };
             var giftWrap = JarvisMarch.RunJarvisMarch(points);
+
             // Print the points of the gift wrap.
             foreach (var point in giftWrap)
-                System.Console.WriteLine($"{point.XPosition}, {point.YPosition}");
+                System.Console.WriteLine($"{point.X}, {point.Y}");
         }
     }
 }
