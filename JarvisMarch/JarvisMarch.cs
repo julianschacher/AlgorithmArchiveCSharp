@@ -72,9 +72,7 @@ namespace JarvisMarch
                 giftWrap.Add(nextPoint);
                 // Check if the gift wrap is completed.
                 if (nextPoint == giftWrap[0])
-                {
                     notWrapped = false;
-                }
             }
 
             return giftWrap;
