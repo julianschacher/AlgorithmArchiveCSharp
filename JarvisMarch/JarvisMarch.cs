@@ -19,7 +19,7 @@ namespace JarvisMarch
 
     public class JarvisMarch
     {
-        public static List<Vector> Run(List<Vector> points)
+        public List<Vector> Run(List<Vector> points)
         {
             // Set the intial point to the first point of the list.
             var initialPoint = points[0];
