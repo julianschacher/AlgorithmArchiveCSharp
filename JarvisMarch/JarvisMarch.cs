@@ -19,6 +19,8 @@ namespace JarvisMarch
 
         public static bool operator==(Vector a, Vector b) => a.Equals(b);
         public static bool operator!=(Vector a, Vector b) => !(a == b);
+        public static Vector operator+(Vector a, Vector b) => new Vector(a.x + b.x, a.y + b.y);
+        public static Vector operator-(Vector a, Vector b) => new Vector(a.x - b.x, a.y - b.y);
     }
 
     public class JarvisMarch
@@ -51,14 +53,14 @@ namespace JarvisMarch
             {
                 // Search for next Point.
                 // Set the first vector, which is currentPoint -> previousPoint.
-                var firstVector = new Vector(previousPoint.x - currentPoint.x, previousPoint.y - currentPoint.y);
+                var firstVector = previousPoint - currentPoint;
 
                 Vector? nextPoint = null;
                 int scalarProduct = 0;
                 for (int i = 1; i < points.Count; i++)
                 {
                     // Set the second vector, which is currentPoint -> points[i](potential nextPoint).
-                    var secondVector = new Vector(points[i].x - currentPoint.x, points[i].y - currentPoint.y);
+                    var secondVector = points[i] - currentPoint;
 
                     // Calculate the current scalar product.
                     var tempScalarProduct = firstVector.ScalarProduct(secondVector);
