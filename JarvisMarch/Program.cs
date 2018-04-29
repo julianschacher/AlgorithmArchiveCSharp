@@ -11,6 +11,8 @@ namespace JarvisMarch
             System.Console.WriteLine("JarvisMarch");
             // Example list of points.
             // The points are represented by vectors here, but that doesn't really matter.
+
+            System.Console.WriteLine(new Vector(10, 10) == new Vector(10, 10));
             var points = new List<Vector>()
             {
                 new Vector(1, 3),
@@ -27,7 +29,7 @@ namespace JarvisMarch
 
             // Print the points of the gift wrap.
             foreach (var point in giftWrap)
-                System.Console.WriteLine($"{point.X}, {point.Y}");
+                System.Console.WriteLine($"{point.x}, {point.y}");
         }
     }
 }

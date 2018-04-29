@@ -1,20 +1,24 @@
 // submitted by Julian Schacher (jspp)
+using System;
 using System.Collections.Generic;
 
 namespace JarvisMarch
 {
-    public class Vector
+    public struct Vector
     {
-        public int X { get; set; }
-        public int Y { get; set; }
+        public readonly int x;
+        public readonly int y;
 
         public Vector(int xValue, int yValue)
         {
-            this.X = xValue;
-            this.Y = yValue;
+            this.x = xValue;
+            this.y = yValue;
         }
 
-        public int ScalarProduct(Vector otherVector) => (this.X * otherVector.X) + (this.Y * otherVector.Y);
+        public int ScalarProduct(Vector otherVector) => (this.x * otherVector.x) + (this.y * otherVector.y);
+
+        public static bool operator==(Vector a, Vector b) => a.Equals(b);
+        public static bool operator!=(Vector a, Vector b) => !(a == b);
     }
 
     public class JarvisMarch
@@ -26,7 +30,7 @@ namespace JarvisMarch
             // Search for a better initial point. One where the x-position is the lowest.
             for (int i = 1; i < points.Count; i++)
             {
-                if (points[i].X < initialPoint.X)
+                if (points[i].x < initialPoint.x)
                 {
                     initialPoint = points[i];
                 }
@@ -38,7 +42,7 @@ namespace JarvisMarch
             };
 
             // Set previous point first to some point below the first initial point.
-            var previousPoint = new Vector(initialPoint.X, initialPoint.Y - 1);
+            var previousPoint = new Vector(initialPoint.x, initialPoint.y - 1);
             var currentPoint = initialPoint;
 
             var notWrapped = true;
@@ -47,14 +51,14 @@ namespace JarvisMarch
             {
                 // Search for next Point.
                 // Set the first vector, which is currentPoint -> previousPoint.
-                var firstVector = new Vector(previousPoint.X - currentPoint.X, previousPoint.Y - currentPoint.Y);
+                var firstVector = new Vector(previousPoint.x - currentPoint.x, previousPoint.y - currentPoint.y);
 
-                Vector nextPoint = null;
+                Vector? nextPoint = null;
                 int scalarProduct = 0;
                 for (int i = 1; i < points.Count; i++)
                 {
                     // Set the second vector, which is currentPoint -> points[i](potential nextPoint).
-                    var secondVector = new Vector(points[i].X - currentPoint.X, points[i].Y - currentPoint.Y);
+                    var secondVector = new Vector(points[i].x - currentPoint.x, points[i].y - currentPoint.y);
 
                     // Calculate the current scalar product.
                     var tempScalarProduct = firstVector.ScalarProduct(secondVector);
@@ -69,9 +73,9 @@ namespace JarvisMarch
 
                 // Shift points and add/remove them from lists.
                 previousPoint = currentPoint;
-                currentPoint = nextPoint;
-                points.Remove(nextPoint);
-                giftWrap.Add(nextPoint);
+                currentPoint = nextPoint.Value;
+                points.Remove(nextPoint.Value);
+                giftWrap.Add(nextPoint.Value);
                 // Check if the gift wrap is completed.
                 if (nextPoint == giftWrap[0])
                     notWrapped = false;
