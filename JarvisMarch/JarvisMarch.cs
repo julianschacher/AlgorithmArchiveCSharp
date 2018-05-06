@@ -16,6 +16,9 @@ namespace JarvisMarch
             this.y = yValue;
         }
 
+        public override bool Equals(object obj) => obj is Vector v && this.x == v.x && this.y == v.y;
+        public override int GetHashCode() => (17 * 23 + this.x) * 23 + this.y;
+
         public static bool operator==(Vector a, Vector b) => a.Equals(b);
         public static bool operator!=(Vector a, Vector b) => !(a == b);
         public static Vector operator+(Vector a, Vector b) => new Vector(a.x + b.x, a.y + b.y);
