@@ -21,8 +21,6 @@ namespace JarvisMarch
 
         public static bool operator==(Vector a, Vector b) => a.Equals(b);
         public static bool operator!=(Vector a, Vector b) => !(a == b);
-        public static Vector operator+(Vector a, Vector b) => new Vector(a.x + b.x, a.y + b.y);
-        public static Vector operator-(Vector a, Vector b) => new Vector(a.x - b.x, a.y - b.y);
     }
 
     public class JarvisMarch
@@ -39,9 +37,10 @@ namespace JarvisMarch
             {
                 convexHull.Add(pointOnHull);
 
-                // Search for the next pointOnHull by looking which of the remaining points is the next most outer point (or left point if viewed from currentPoint).
+                // Search for the next pointOnHull by looking which of the points is the next most outer point.
                 pointOnHull = points.Aggregate((potentialNextPointOnHull, current) =>
                 {
+                    // Returns true, if potentialNextPointOnHull is equal to the current pointOnHull or if the current point is left of the line defined by pointOnHull and potentialNextPointOnHull.
                     if (potentialNextPointOnHull == pointOnHull || IsLeftOf(pointOnHull, potentialNextPointOnHull, current))
                         return current;
                     return potentialNextPointOnHull;
@@ -53,7 +52,7 @@ namespace JarvisMarch
             return convexHull;
         }
 
-        // Returns true, if p is more left than b, if viewed from a.
+        // Returns true, if p is left of the line defined by a and b.
         private bool IsLeftOf(Vector a, Vector b, Vector p) => (b.x - a.x) * (p.y - a.y) > (p.x - a.x) * (b.y - a.y);
     }
 }
