@@ -126,8 +126,6 @@ namespace HuffmanCoding
                     nodes.RemoveAt(nodes.Count - 1);
                 };
                 nodePriorityList.AddNode(parentNode);
-                if (parentNode.Weight > 100)
-                    throw new Exception();
             }
 
             return nodePriorityList.Nodes[0];
