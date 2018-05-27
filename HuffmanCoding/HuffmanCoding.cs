@@ -24,7 +24,8 @@ namespace HuffmanCoding
         // The Node class used for the Huffman Tree.
         public class Node
         {
-            public Node[] Children { get; set; } = new Node[2];
+            public Node LeftChild { get; set; }
+            public Node RightChild { get; set; }
             public List<bool> BitString { get; set; } = new List<bool>();
             public int Weight { get; set; }
             public string Key { get; set; }
@@ -81,9 +82,9 @@ namespace HuffmanCoding
             {
                 // Go down the tree.
                 if (!boolean)
-                    currentNode = currentNode.Children[0];
+                    currentNode = currentNode.LeftChild;
                 else
-                    currentNode = currentNode.Children[1];
+                    currentNode = currentNode.RightChild;
 
                 // Check if it's a leaf node.
                 if (currentNode.Key.Count() == 1)
@@ -117,14 +118,18 @@ namespace HuffmanCoding
             {
                 var parentNode = new Node("", 0);
                 // Add the two nodes with the smallest weight to the parent node and remove them from the tree.
-                for (int i = 0; i < 2; i++)
-                {
-                    parentNode.Children[i] = nodes.Last();
-                    parentNode.Key += nodes.Last().Key;
-                    parentNode.Weight += nodes.Last().Weight;
+                parentNode.LeftChild = nodes.Last();
+                parentNode.Key += nodes.Last().Key;
+                parentNode.Weight += nodes.Last().Weight;
 
-                    nodes.RemoveAt(nodes.Count - 1);
-                };
+                nodes.RemoveAt(nodes.Count - 1);
+
+                parentNode.RightChild = nodes.Last();
+                parentNode.Key += nodes.Last().Key;
+                parentNode.Weight += nodes.Last().Weight;
+
+                nodes.RemoveAt(nodes.Count - 1);
+
                 nodePriorityList.AddNode(parentNode);
             }
 
@@ -147,23 +152,17 @@ namespace HuffmanCoding
                     dictionary.Add(temp.Key[0], temp.BitString);
                 else
                 {
-                    for (int i = 0; i < temp.Children.Count(); i++)
+                    if (temp.LeftChild != null)
                     {
-                        if (temp.Children[i] != null)
-                        {
-                            if (i == 0)
-                            {
-                                temp.Children[i].BitString.AddRange(temp.BitString);
-                                temp.Children[i].BitString.Add(false);
-                            }
-                            else
-                            {
-                                temp.Children[i].BitString.AddRange(temp.BitString);
-                                temp.Children[i].BitString.Add(true);
-                            }
-
-                            stack.Push(temp.Children[i]);
-                        }
+                        temp.LeftChild.BitString.AddRange(temp.BitString);
+                        temp.LeftChild.BitString.Add(false);
+                        stack.Push(temp.LeftChild);
+                    }
+                    if (temp.RightChild != null)
+                    {
+                        temp.RightChild.BitString.AddRange(temp.BitString);
+                        temp.RightChild.BitString.Add(true);
+                        stack.Push(temp.RightChild);
                     }
                 }
            }
