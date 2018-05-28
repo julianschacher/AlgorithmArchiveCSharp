@@ -42,24 +42,34 @@ namespace HuffmanCoding
         // Node with biggest value at the top.
         class NodePriorityList
         {
-            public List<Node> Nodes { get; private set; } = new List<Node>();
+            public int Count => nodes.Count;
+
+            private List<Node> nodes = new List<Node>();
 
             public NodePriorityList() { }
-            public NodePriorityList(List<Node> nodes)
+            public NodePriorityList(List<Node> givenNodes)
             {
-                Nodes = nodes.ToList();
-                Nodes.Sort();
+                this.nodes = givenNodes.ToList();
+                this.nodes.Sort();
             }
 
-            public void AddNode(Node newNode)
+            public void Add(Node newNode)
             {
-                var index = ~Nodes.BinarySearch(newNode);
-                if (index == Nodes.Count)
+                var index = ~this.nodes.BinarySearch(newNode);
+                if (index == this.nodes.Count)
                 {
-                    Nodes.Add(newNode);
+                    this.nodes.Add(newNode);
                     return;
                 }
-                Nodes.Insert(~index, newNode);
+                this.nodes.Insert(~index, newNode);
+            }
+
+            public Node Pop()
+            {
+                var first = this.nodes.First();
+                if (first != null)
+                    this.nodes.Remove(first);
+                return first;
             }
         }
 
@@ -106,26 +116,22 @@ namespace HuffmanCoding
             var nodePriorityList = new NodePriorityList(nodes);
 
             // Create Tree.
-            while (nodePriorityList.Nodes.Count > 1)
+            while (nodePriorityList.Count > 1)
             {
                 var parentNode = new Node("", 0);
                 // Add the two nodes with the smallest weight to the parent node and remove them from the tree.
-                parentNode.LeftChild = nodePriorityList.Nodes.First();
-                parentNode.Key += nodePriorityList.Nodes.First().Key;
-                parentNode.Weight += nodePriorityList.Nodes.First().Weight;
+                parentNode.LeftChild = nodePriorityList.Pop();
+                parentNode.Key += parentNode.LeftChild.Key;
+                parentNode.Weight += parentNode.LeftChild.Weight;
 
-                nodePriorityList.Nodes.RemoveAt(0);
+                parentNode.RightChild = nodePriorityList.Pop();
+                parentNode.Key += parentNode.RightChild.Key;
+                parentNode.Weight += parentNode.RightChild.Weight;
 
-                parentNode.RightChild = nodePriorityList.Nodes.First();
-                parentNode.Key += nodePriorityList.Nodes.First().Key;
-                parentNode.Weight += nodePriorityList.Nodes.First().Weight;
-
-                nodePriorityList.Nodes.RemoveAt(0);
-
-                nodePriorityList.AddNode(parentNode);
+                nodePriorityList.Add(parentNode);
             }
 
-            return nodePriorityList.Nodes[0];
+            return nodePriorityList.Pop();
         }
 
         private static Dictionary<char, List<bool>> CreateDictionary(Node root)
