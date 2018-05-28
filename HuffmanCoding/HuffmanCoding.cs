@@ -22,7 +22,7 @@ namespace HuffmanCoding
     public static class HuffmanCoding
     {
         // The Node class used for the Huffman Tree.
-        public class Node
+        public class Node : IComparable<Node>
         {
             public Node LeftChild { get; set; }
             public Node RightChild { get; set; }
@@ -35,6 +35,8 @@ namespace HuffmanCoding
                 this.Key = key;
                 this.Weight =  weight;
             }
+
+            public int CompareTo(Node other) => this.Weight - other.Weight;
         }
 
         // Node with biggest value at the top.
@@ -43,25 +45,21 @@ namespace HuffmanCoding
             public List<Node> Nodes { get; private set; } = new List<Node>();
 
             public NodePriorityList() { }
-            public NodePriorityList(List<Node> nodes) => Nodes = nodes.OrderByDescending(n => n.Weight).ToList();
+            public NodePriorityList(List<Node> nodes)
+            {
+                Nodes = nodes.ToList();
+                Nodes.Sort();
+            }
 
             public void AddNode(Node newNode)
             {
-                if (Nodes.Count == 0)
+                var index = ~Nodes.BinarySearch(newNode);
+                if (index == Nodes.Count)
                 {
                     Nodes.Add(newNode);
                     return;
                 }
-                for (int i = Nodes.Count - 1; i >= 0; i--)
-                {
-                    if (Nodes[i].Weight > newNode.Weight)
-                    {
-                        Nodes.Insert(i + 1, newNode);
-                        return;
-                    }
-                    else if (i == 0)
-                        Nodes.Insert(0, newNode);
-                }
+                Nodes.Insert(~index, newNode);
             }
         }
 
@@ -109,26 +107,26 @@ namespace HuffmanCoding
                 else
                     result.Weight++;
             }
+
             // Convert list of nodes to a NodePriorityList.
             var nodePriorityList = new NodePriorityList(nodes);
-            nodes = nodePriorityList.Nodes;
 
             // Create Tree.
-            while (nodes.Count > 1)
+            while (nodePriorityList.Nodes.Count > 1)
             {
                 var parentNode = new Node("", 0);
                 // Add the two nodes with the smallest weight to the parent node and remove them from the tree.
-                parentNode.LeftChild = nodes.Last();
-                parentNode.Key += nodes.Last().Key;
-                parentNode.Weight += nodes.Last().Weight;
+                parentNode.LeftChild = nodePriorityList.Nodes.First();
+                parentNode.Key += nodePriorityList.Nodes.First().Key;
+                parentNode.Weight += nodePriorityList.Nodes.First().Weight;
 
-                nodes.RemoveAt(nodes.Count - 1);
+                nodePriorityList.Nodes.RemoveAt(0);
 
-                parentNode.RightChild = nodes.Last();
-                parentNode.Key += nodes.Last().Key;
-                parentNode.Weight += nodes.Last().Weight;
+                parentNode.RightChild = nodePriorityList.Nodes.First();
+                parentNode.Key += nodePriorityList.Nodes.First().Key;
+                parentNode.Weight += nodePriorityList.Nodes.First().Weight;
 
-                nodes.RemoveAt(nodes.Count - 1);
+                nodePriorityList.Nodes.RemoveAt(0);
 
                 nodePriorityList.AddNode(parentNode);
             }
