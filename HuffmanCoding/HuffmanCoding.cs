@@ -29,11 +29,17 @@ namespace HuffmanCoding
             public List<bool> BitString { get; set; } = new List<bool>();
             public int Weight { get; set; }
             public string Key { get; set; }
-
-            public Node(string key, int weight)
+            
+            // Creates a leaf. So just a node is created with the given values.
+            public static Node CreateLeaf(char key, int weight) => new Node(key.ToString(), weight, null, null);
+            // Creates a branch. Here a node is created by adding the keys and weights of both childs together.
+            public static Node CreateBranch(Node leftChild, Node rightChild) => new Node(leftChild.Key + rightChild.Key, leftChild.Weight + rightChild.Weight, leftChild, rightChild);
+            private Node(string key, int weight, Node leftChild, Node rightChild)
             {
                 this.Key = key;
                 this.Weight =  weight;
+                this.LeftChild = leftChild;
+                this.RightChild = rightChild;
             }
 
             public int CompareTo(Node other) => this.Weight - other.Weight;
@@ -109,7 +115,7 @@ namespace HuffmanCoding
             // Create a List of all characters and their count in input by putting them into nodes.
             var nodes = input
                 .GroupBy(c => c)
-                .Select(n => new Node(n.Key.ToString(), n.Count()))
+                .Select(n => Node.CreateLeaf(n.Key, n.Count()))
                 .ToList();
 
             // Convert list of nodes to a NodePriorityList.
@@ -118,15 +124,10 @@ namespace HuffmanCoding
             // Create Tree.
             while (nodePriorityList.Count > 1)
             {
-                var parentNode = new Node("", 0);
-                // Add the two nodes with the smallest weight to the parent node and remove them from the tree.
-                parentNode.LeftChild = nodePriorityList.Pop();
-                parentNode.Key += parentNode.LeftChild.Key;
-                parentNode.Weight += parentNode.LeftChild.Weight;
-
-                parentNode.RightChild = nodePriorityList.Pop();
-                parentNode.Key += parentNode.RightChild.Key;
-                parentNode.Weight += parentNode.RightChild.Weight;
+                // Pop the two nodes with the smallest weights from the nodePriorityList and create a parentNode with the CreateBranch method. (This method adds the keys and weights of the childs together.)
+                var leftChild = nodePriorityList.Pop();
+                var rightChild = nodePriorityList.Pop();
+                var parentNode = Node.CreateBranch(leftChild, rightChild);
 
                 nodePriorityList.Add(parentNode);
             }
