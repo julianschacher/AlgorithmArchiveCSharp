@@ -72,10 +72,9 @@ namespace HuffmanCoding
 
             public Node Pop()
             {
-                var first = this.nodes.First();
-                if (first != null)
-                    this.nodes.Remove(first);
-                return first;
+                var result = this.nodes[0];
+                this.nodes.RemoveAt(0);
+                return result;
             }
         }
 
