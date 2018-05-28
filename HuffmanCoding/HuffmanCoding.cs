@@ -92,10 +92,10 @@ namespace HuffmanCoding
         {
             var output = "";
             Node currentNode = result.Tree;
-            foreach (var boolean in result.BitString)
+            foreach (var bit in result.BitString)
             {
                 // Go down the tree.
-                if (boolean == '0')
+                if (bit == '0')
                     currentNode = currentNode.LeftChild;
                 else
                     currentNode = currentNode.RightChild;
