@@ -29,6 +29,8 @@ namespace HuffmanCoding
             public string BitString { get; set; } = "";
             public int Weight { get; set; }
             public string Key { get; set; }
+
+            public bool IsLeaf => LeftChild == null && RightChild == null;
             
             // Creates a leaf. So just a node is created with the given values.
             public static Node CreateLeaf(char key, int weight) => new Node(key.ToString(), weight, null, null);
@@ -99,8 +101,7 @@ namespace HuffmanCoding
                 else
                     currentNode = currentNode.RightChild;
 
-                // Check if it's a leaf node.
-                if (currentNode.Key.Count() == 1)
+                if (currentNode.IsLeaf)
                 {                    
                     output += currentNode.Key;
                     currentNode = result.Tree;
@@ -147,7 +148,7 @@ namespace HuffmanCoding
             {
                 temp = stack.Pop();
 
-                if (temp.Key.Count() == 1)
+                if (temp.IsLeaf)
                     dictionary.Add(temp.Key[0], temp.BitString);
                 else
                 {
