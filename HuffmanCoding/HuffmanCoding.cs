@@ -97,16 +97,10 @@ namespace HuffmanCoding
         private static Node CreateTree(string input)
         {
             // Create a List of all characters and their count in input by putting them into nodes.
-            var nodes = new List<Node>();
-            foreach (var character in input)
-            {
-                var result = nodes.Where(n => n.Key[0] == character).SingleOrDefault();
-
-                if (result == null)
-                    nodes.Add(new Node(character.ToString(), 1));
-                else
-                    result.Weight++;
-            }
+            var nodes = input
+                .GroupBy(c => c)
+                .Select(n => new Node(n.Key.ToString(), n.Count()))
+                .ToList();
 
             // Convert list of nodes to a NodePriorityList.
             var nodePriorityList = new NodePriorityList(nodes);
