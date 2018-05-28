@@ -7,11 +7,11 @@ namespace HuffmanCoding
 {
     public class EncodingResult 
     {
-        public List<bool> BitString { get; set; }
-        public Dictionary<char, List<bool>> Dictionary { get; set; }
+        public string BitString { get; set; }
+        public Dictionary<char, string> Dictionary { get; set; }
         public HuffmanCoding.Node Tree { get; set; }
 
-        public EncodingResult(List<bool> bitString, Dictionary<char, List<bool>> dictionary, HuffmanCoding.Node tree)
+        public EncodingResult(string bitString, Dictionary<char, string> dictionary, HuffmanCoding.Node tree)
         {
             this.BitString = bitString;
             this.Dictionary = dictionary;
@@ -26,7 +26,7 @@ namespace HuffmanCoding
         {
             public Node LeftChild { get; set; }
             public Node RightChild { get; set; }
-            public List<bool> BitString { get; set; } = new List<bool>();
+            public string BitString { get; set; } = "";
             public int Weight { get; set; }
             public string Key { get; set; }
             
@@ -95,7 +95,7 @@ namespace HuffmanCoding
             foreach (var boolean in result.BitString)
             {
                 // Go down the tree.
-                if (!boolean)
+                if (boolean == '0')
                     currentNode = currentNode.LeftChild;
                 else
                     currentNode = currentNode.RightChild;
@@ -135,9 +135,10 @@ namespace HuffmanCoding
             return nodePriorityList.Pop();
         }
 
-        private static Dictionary<char, List<bool>> CreateDictionary(Node root)
+        private static Dictionary<char, string> CreateDictionary(Node root)
         {
-            var dictionary = new Dictionary<char, List<bool>>();
+            // We're using a string instead of a actual bits here, since it makes the code somewhat more readable and this is an educational example. 
+            var dictionary = new Dictionary<char, string>();
 
             var stack = new Stack<Node>();
             stack.Push(root);
@@ -153,14 +154,14 @@ namespace HuffmanCoding
                 {
                     if (temp.LeftChild != null)
                     {
-                        temp.LeftChild.BitString.AddRange(temp.BitString);
-                        temp.LeftChild.BitString.Add(false);
+                        temp.LeftChild.BitString  += temp.BitString;
+                        temp.LeftChild.BitString += 0;
                         stack.Push(temp.LeftChild);
                     }
                     if (temp.RightChild != null)
                     {
-                        temp.RightChild.BitString.AddRange(temp.BitString);
-                        temp.RightChild.BitString.Add(true);
+                        temp.RightChild.BitString += temp.BitString;
+                        temp.RightChild.BitString += 1;
                         stack.Push(temp.RightChild);
                     }
                 }
@@ -169,11 +170,12 @@ namespace HuffmanCoding
            return dictionary;
         }
 
-        private static List<bool> CreateBitString(string input, Dictionary<char, List<bool>> dictionary)
+        private static string CreateBitString(string input, Dictionary<char, string> dictionary)
         {
-            var bitString = new List<bool>();
+            // We're using a string right here. While no compression is achieved with a string, it's the easiest way to display what the compressed result looks like. Also this is just an educational example.
+            var bitString = "";
             foreach (var character in input)
-                bitString.AddRange(dictionary[character]);
+                bitString += dictionary[character];
 
             return bitString;
         }
