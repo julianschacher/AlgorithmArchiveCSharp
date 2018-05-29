@@ -63,13 +63,11 @@ namespace HuffmanCoding
 
             public void Add(Node newNode)
             {
-                var index = ~this.nodes.BinarySearch(newNode);
-                if (index == this.nodes.Count)
-                {
-                    this.nodes.Add(newNode);
-                    return;
-                }
-                this.nodes.Insert(~index, newNode);
+                var index = this.nodes.BinarySearch(newNode);
+                if (index < 0)
+                    this.nodes.Insert(~index, newNode);
+                else
+                    this.nodes.Insert(index, newNode);
             }
 
             public Node Pop()
