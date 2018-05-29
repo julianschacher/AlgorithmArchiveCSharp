@@ -8,7 +8,8 @@ namespace HuffmanCoding
     {
         static void Main(string[] args)
         {
-            var result = HuffmanCoding.Encode("aaaabbbccd");
+            var huffmanCoding = new HuffmanCoding();
+            var result = huffmanCoding.Encode("aaaabbbccd");
             // The bitStrings are just strings and provide no compression. Look in HuffmanCoding.cs for explanation.
             // Print dictionary.
             foreach (var entry in result.Dictionary)
@@ -18,7 +19,7 @@ namespace HuffmanCoding
             // Print BitString.
             System.Console.WriteLine($"{result.BitString} count: {result.BitString.Length}");
 
-            var originalString = HuffmanCoding.Decode(result);
+            var originalString = huffmanCoding.Decode(result);
             System.Console.WriteLine(originalString);
         }
     }
