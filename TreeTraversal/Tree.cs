@@ -16,10 +16,7 @@ namespace TreeTraversal
         
         private Node root;
         
-        public Tree(int depthCount, int childrenCount)
-        {
-            CreateTree(depthCount, childrenCount);
-        }
+        public Tree(int depthCount, int childrenCount) => CreateTree(depthCount, childrenCount);
 
         public void CreateTree(int depthCount, int childrenCount)
         {
@@ -36,9 +33,7 @@ namespace TreeTraversal
                 Console.WriteLine(node.Id);
 
                 foreach (var c in node.Children)
-                {
                     DFSRecursive(c);
-                }
             }
         }
 
@@ -54,9 +49,7 @@ namespace TreeTraversal
                 temp = stack.Pop();
 
                 foreach (var c in temp.Children)
-                {
                     stack.Push(c);
-                }
             }
         }
 
@@ -67,9 +60,7 @@ namespace TreeTraversal
             void DFSRecursivePostorder(Node node)
             {
                 foreach (var c in node.Children)
-                {
                     DFSRecursivePostorder(c);
-                }
                 
                 // Here we are doing something...
                 Console.WriteLine(node.Id);
@@ -84,9 +75,7 @@ namespace TreeTraversal
             void DFSRecursiveInorderBinary(Node node)
             {
                 if (node.Children.Count > 2)
-                {
                     throw new Exception("Not binary tree!");
-                }
 
                 if (node.Children.Count > 0)
                 {
@@ -95,9 +84,7 @@ namespace TreeTraversal
                     DFSRecursiveInorderBinary(node.Children[1]);
                 }
                 else
-                {
                     Console.WriteLine(node.Id);
-                }
             }
         }
 
@@ -113,9 +100,7 @@ namespace TreeTraversal
                 temp = queue.Dequeue();
 
                 foreach (var c in temp.Children)
-                {
                     queue.Enqueue(c);
-                }
             }
         }
 
