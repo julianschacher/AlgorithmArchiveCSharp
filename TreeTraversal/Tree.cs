@@ -51,6 +51,16 @@ namespace TreeTraversal
             }
         }
 
+        public void StartDFSRecursivePostorder()
+        {
+            DFSRecursivePostorder(root);
+        }
+
+        public void StartDFSRecursiveInorderBinary()
+        {
+            DFSRecursiveInorderBinary(root);
+        }
+
         public void BFSQueue()
         {
             var queue = new Queue<Node>();
@@ -91,6 +101,37 @@ namespace TreeTraversal
             foreach (var c in node.Children)
             {
                 DFSRecursive(c);
+            }
+        }
+
+        private void DFSRecursivePostorder(Node node)
+        {
+            foreach (var c in node.Children)
+            {
+                DFSRecursivePostorder(c);
+            }
+            
+            // Here we are doing something...
+            Console.WriteLine(node.Id);
+        }
+        
+        // This assumes only 2 children
+        private void DFSRecursiveInorderBinary(Node node)
+        {
+            if (node.Children.Count > 2)
+            {
+                throw new Exception("Not binary tree!");
+            }
+
+            if (node.Children.Count > 0)
+            {
+                DFSRecursiveInorderBinary(node.Children[0]);
+                Console.WriteLine(node.Id);
+                DFSRecursiveInorderBinary(node.Children[1]);
+            }
+            else
+            {
+                Console.WriteLine(node.Id);
             }
         }
     }
