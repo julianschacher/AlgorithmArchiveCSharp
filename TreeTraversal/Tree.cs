@@ -60,7 +60,6 @@ namespace TreeTraversal
                 foreach (var c in node.Children)
                     DFSRecursivePostorder(c);
                 
-                // Here we are doing something...
                 Console.WriteLine(node.Id);
             }
         }
