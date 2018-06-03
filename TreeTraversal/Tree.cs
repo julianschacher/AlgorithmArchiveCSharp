@@ -16,9 +16,7 @@ namespace TreeTraversal
         
         private Node root;
         
-        public Tree(int depthCount, int childrenCount) => CreateTree(depthCount, childrenCount);
-
-        public void CreateTree(int depthCount, int childrenCount)
+        public Tree(int depthCount, int childrenCount)
         {
             root = new Node(1);
             CreateAllChildren(root, depthCount, childrenCount);
