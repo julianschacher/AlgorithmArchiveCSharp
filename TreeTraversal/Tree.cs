@@ -10,6 +10,8 @@ namespace TreeTraversal
         {
             public List<Node> Children { get; set; } = new List<Node>();
             public int Id { get; set; }
+
+            public Node(int id) => this.Id = id;
         }
         
         private Node root;
@@ -21,10 +23,7 @@ namespace TreeTraversal
 
         public void CreateTree(int depthCount, int childrenCount)
         {
-            root = new Node
-            {
-                Id = 1
-            };
+            root = new Node(1);
             CreateAllChildren(root, depthCount, childrenCount);
         }
         
@@ -127,10 +126,7 @@ namespace TreeTraversal
 
             for (int i = 0; i < childrenCount; i++)
             {
-                node.Children.Add(new Node
-                {
-                    Id = node.Id * 10 + i + 1
-                });
+                node.Children.Add(new Node(node.Id * 10 + i + 1));
                 CreateAllChildren(node.Children[i], rowCount - 1, childrenCount);
             }
         }
