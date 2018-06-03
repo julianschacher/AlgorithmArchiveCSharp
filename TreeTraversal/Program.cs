@@ -13,7 +13,7 @@ namespace TreeTraversal
             tree.StartDFSRecursive();
             Console.WriteLine("DFSStack:");
             tree.DFSStack();
-            Console.WriteLine("DFSQueue:");
+            Console.WriteLine("BFSQueue:");
             tree.BFSQueue();
             Console.WriteLine("StartDFSRecursivePostorder");
             tree.StartDFSRecursivePostorder();
