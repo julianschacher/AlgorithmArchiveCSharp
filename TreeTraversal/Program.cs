@@ -9,20 +9,20 @@ namespace TreeTraversal
         {
             Console.WriteLine("TreeTraversal");
             var tree = new Tree(3, 3);
-            Console.WriteLine("StartDFSRecursive:");
-            tree.StartDFSRecursive();
+            Console.WriteLine("DFSRecursive:");
+            tree.DFSRecursive();
             Console.WriteLine("DFSStack:");
             tree.DFSStack();
             Console.WriteLine("BFSQueue:");
             tree.BFSQueue();
-            Console.WriteLine("StartDFSRecursivePostorder");
-            tree.StartDFSRecursivePostorder();
+            Console.WriteLine("DFSRecursivePostorder");
+            tree.DFSRecursivePostorder();
 
-            // Console.WriteLine("StartDFSRecursiveInorder (fail)");
-            // tree.StartDFSRecursiveInorderBinary();
+            // Console.WriteLine("DFSRecursiveInorder (fail)");
+            // tree.DFSRecursiveInorderBinary();
             tree = new Tree(3, 2);
-            Console.WriteLine("StartDFSRecursiveInorder (succeed)");
-            tree.StartDFSRecursiveInorderBinary();
+            Console.WriteLine("DFSRecursiveInorder (succeed)");
+            tree.DFSRecursiveInorderBinary();
         }
     }
 }

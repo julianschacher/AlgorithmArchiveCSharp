@@ -28,9 +28,19 @@ namespace TreeTraversal
             CreateAllChildren(root, depthCount, childrenCount);
         }
         
-        public void StartDFSRecursive()
+        public void DFSRecursive()
         {
             DFSRecursive(root);
+        
+            void DFSRecursive(Node node)
+            {
+                Console.WriteLine(node.Id);
+
+                foreach (var c in node.Children)
+                {
+                    DFSRecursive(c);
+                }
+            }
         }
 
         public void DFSStack()
@@ -51,14 +61,45 @@ namespace TreeTraversal
             }
         }
 
-        public void StartDFSRecursivePostorder()
+        public void DFSRecursivePostorder()
         {
             DFSRecursivePostorder(root);
+
+            void DFSRecursivePostorder(Node node)
+            {
+                foreach (var c in node.Children)
+                {
+                    DFSRecursivePostorder(c);
+                }
+                
+                // Here we are doing something...
+                Console.WriteLine(node.Id);
+            }
         }
 
-        public void StartDFSRecursiveInorderBinary()
+        public void DFSRecursiveInorderBinary()
         {
             DFSRecursiveInorderBinary(root);
+
+            // This assumes only 2 children
+            void DFSRecursiveInorderBinary(Node node)
+            {
+                if (node.Children.Count > 2)
+                {
+                    throw new Exception("Not binary tree!");
+                }
+
+                if (node.Children.Count > 0)
+                {
+                    DFSRecursiveInorderBinary(node.Children[0]);
+                    Console.WriteLine(node.Id);
+                    DFSRecursiveInorderBinary(node.Children[1]);
+                }
+                else
+                {
+                    Console.WriteLine(node.Id);
+                }
+            }
         }
 
         public void BFSQueue()
@@ -91,47 +132,6 @@ namespace TreeTraversal
                     Id = node.Id * 10 + i + 1
                 });
                 CreateAllChildren(node.Children[i], rowCount - 1, childrenCount);
-            }
-        }
-        
-        private void DFSRecursive(Node node)
-        {
-            Console.WriteLine(node.Id);
-
-            foreach (var c in node.Children)
-            {
-                DFSRecursive(c);
-            }
-        }
-
-        private void DFSRecursivePostorder(Node node)
-        {
-            foreach (var c in node.Children)
-            {
-                DFSRecursivePostorder(c);
-            }
-            
-            // Here we are doing something...
-            Console.WriteLine(node.Id);
-        }
-        
-        // This assumes only 2 children
-        private void DFSRecursiveInorderBinary(Node node)
-        {
-            if (node.Children.Count > 2)
-            {
-                throw new Exception("Not binary tree!");
-            }
-
-            if (node.Children.Count > 0)
-            {
-                DFSRecursiveInorderBinary(node.Children[0]);
-                Console.WriteLine(node.Id);
-                DFSRecursiveInorderBinary(node.Children[1]);
-            }
-            else
-            {
-                Console.WriteLine(node.Id);
             }
         }
     }
