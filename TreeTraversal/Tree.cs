@@ -35,22 +35,6 @@ namespace TreeTraversal
             }
         }
 
-        public void DFSStack()
-        {
-            var stack = new Stack<Node>();
-            stack.Push(root);
-            Node temp;
-
-            while (stack.Count != 0)
-            {
-                Console.WriteLine(stack.Peek().Id);
-                temp = stack.Pop();
-
-                foreach (var c in temp.Children)
-                    stack.Push(c);
-            }
-        }
-
         public void DFSRecursivePostorder()
         {
             DFSRecursivePostorder(root);
@@ -82,6 +66,22 @@ namespace TreeTraversal
                 }
                 else
                     Console.WriteLine(node.Id);
+            }
+        }
+
+        public void DFSStack()
+        {
+            var stack = new Stack<Node>();
+            stack.Push(root);
+            Node temp;
+
+            while (stack.Count != 0)
+            {
+                Console.WriteLine(stack.Peek().Id);
+                temp = stack.Pop();
+
+                foreach (var c in temp.Children)
+                    stack.Push(c);
             }
         }
 
