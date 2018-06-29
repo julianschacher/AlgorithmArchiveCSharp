@@ -1,4 +1,4 @@
-﻿// submitted by Julian Schacher (jspp)
+// submitted by Julian Schacher (jspp)
 using System;
 using System.Collections.Generic;
 
@@ -13,19 +13,19 @@ namespace TreeTraversal
 
             public Node(int id) => this.Id = id;
         }
-        
+
         private Node root;
-        
+
         public Tree(int depthCount, int childrenCount)
         {
             root = new Node(1);
             CreateAllChildren(root, depthCount, childrenCount);
         }
-        
+
         public void DFSRecursive()
         {
             DFSRecursive(root);
-        
+
             void DFSRecursive(Node node)
             {
                 Console.WriteLine(node.Id);
@@ -43,7 +43,7 @@ namespace TreeTraversal
             {
                 foreach (var c in node.Children)
                     DFSRecursivePostorder(c);
-                
+
                 Console.WriteLine(node.Id);
             }
         }
