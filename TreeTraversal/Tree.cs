@@ -11,11 +11,25 @@ namespace TreeTraversal
 
         public Tree(int depthCount, int childrenCount)
         {
-            Id = 1;
-            CreateAllChildren(this, depthCount, childrenCount);
+            this.Id = 1;
+
+            if (!(depthCount <= 1))
+            {
+                for (int i = 0; i < childrenCount; i++)
+                    this._children.Add(new Tree(this.Id * 10 + i + 1, depthCount - 1, childrenCount));
+            }
         }
 
-        private Tree (int id) => Id = id;
+        private Tree(int id, int depthCount, int childrenCount)
+        {
+            this.Id = id;
+
+            if (!(depthCount <= 1))
+            {
+                for (int i = 0; i < childrenCount; i++)
+                    this._children.Add(new Tree(this.Id * 10 + i + 1, depthCount - 1, childrenCount));
+            }
+        }
 
         public void DFSRecursive()
         {
@@ -93,18 +107,6 @@ namespace TreeTraversal
 
                 foreach (var c in temp._children)
                     queue.Enqueue(c);
-            }
-        }
-
-        private void CreateAllChildren(Tree tree, int rowCount, int childrenCount)
-        {
-            if (rowCount <= 1)
-                return;
-
-            for (int i = 0; i < childrenCount; i++)
-            {
-                tree._children.Add(new Tree(tree.Id * 10 + i + 1));
-                CreateAllChildren(tree._children[i], rowCount - 1, childrenCount);
             }
         }
     }
