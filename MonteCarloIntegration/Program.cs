@@ -10,7 +10,7 @@ namespace MonteCarloIntegration
             System.Console.WriteLine("Running with 10,000,000 samples.");
             var piEstimate = monteCarlo.Run(10000000);
             System.Console.WriteLine($"The estimate of pi is: {piEstimate.Estimate}");
-            System.Console.WriteLine($"The error is: {piEstimate.Error}");
+            System.Console.WriteLine($"The percent error is: {piEstimate.PercentError}%");
 
             System.Console.WriteLine("How many samples should be used?");
             var samples = 0;
@@ -20,7 +20,7 @@ namespace MonteCarloIntegration
             System.Console.WriteLine($"Running with {samples} samples.");
             piEstimate = monteCarlo.Run(samples);
             System.Console.WriteLine($"The estimate of pi is: {piEstimate.Estimate}");
-            System.Console.WriteLine($"The error is: {piEstimate.Error}");
+            System.Console.WriteLine($"The percent error is: {piEstimate.PercentError}%");
         }
     }
 }
